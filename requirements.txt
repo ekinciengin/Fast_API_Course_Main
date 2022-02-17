@@ -1,7 +1,9 @@
-fastapi
+fastapi~=0.70.1
 uvicorn
-sqlalchemy
-passlib
+sqlalchemy~=1.4.29
+passlib~=1.7.4
 bcrypt
 python-jose
 python-multipart
+pydantic~=1.8.2
+jose
