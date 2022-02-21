@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Date
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, TIMESTAMP
 from .database import Base
 from sqlalchemy.orm import relationship
 
@@ -33,7 +33,7 @@ class AudiRecord(Base):
     audio_record_date = Column(Date)
     audio_record_file_type = Column(String)
     created_by = Column(String)
-    creation_date = Column(Date)
+    creation_date = Column(TIMESTAMP)
     last_updated_by = Column(String)
     last_updated_date = Column(Date)
     user_id = Column(Integer, ForeignKey('xxfr_audio_life_users.user_id'))

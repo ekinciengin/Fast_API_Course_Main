@@ -65,6 +65,7 @@ class AudioRecord(AudioRecordBase):
 
 
 class UserAccountsBase(BaseModel):
+    user_id:int
     user_name: str
     email_address: str
     password: str
