@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from sqlalchemy import Sequence
 from sqlalchemy.orm import Session
 from .. import models, schemas
 from fastapi import HTTPException, status
@@ -11,8 +11,11 @@ def get_all(db: Session):
 
 
 def create(request: schemas.AudioRecordBase, db: Session, current_user: schemas.UserAccount):
+    new_audio_record_id = db.execute(Sequence('xxfr_al_audio_record_id_seq'))
+
     user_account = db.query(models.UserAccounts).filter(models.UserAccounts.user_name == current_user.username).first()
-    new_audio_record = models.AudiRecord(audio_record_title=request.audio_record_title,
+    new_audio_record = models.AudiRecord(audio_record_id=new_audio_record_id,
+                                         audio_record_title=request.audio_record_title,
                                          audio_record_date=request.audio_record_date,
                                          audio_record_file_type=request.audio_record_file_type,
                                          creation_date=datetime.now(),

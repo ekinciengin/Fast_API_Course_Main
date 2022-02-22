@@ -1,7 +1,9 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import Sequence
 from .. import models, schemas
 from fastapi import HTTPException, status
 from ..hashing import Hash
+from datetime import datetime
 
 
 def get_all(db: Session):
@@ -10,8 +12,14 @@ def get_all(db: Session):
 
 
 def create(request: schemas.UserAccountsBase, db: Session):
-    new_user = models.UserAccounts(user_name=request.user_name, email_address=request.email_address,
-                                   password=Hash.bcrypt(request.password))
+    new_user_id = db.execute(Sequence('xxfr_al_user_id_seq'))
+
+    new_user = models.UserAccounts(user_id=new_user_id,
+                                   user_name=request.user_name,
+                                   email_address=request.email_address,
+                                   password=Hash.bcrypt(request.password),
+                                   creation_date=datetime.now(),
+                                   last_updated_date=datetime.now())
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
