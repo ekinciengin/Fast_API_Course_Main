@@ -18,7 +18,7 @@ def all(db: Session = Depends(get_db), current_user: schemas.UserAccount = Depen
 
 
 @router.post('/', status_code=status.HTTP_201_CREATED,)
-def create(request: schemas.AudioRecord, db: Session = Depends(get_db), current_user: schemas.UserAccount = Depends(oauth2.get_current_user)):
+def create(request: schemas.AudioRecord, db: Session = Depends(get_db), current_user: schemas.User = Depends(oauth2.get_current_user)):
     return audioRecord.create(request, db, current_user)
 
 

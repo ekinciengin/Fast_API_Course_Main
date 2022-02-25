@@ -10,16 +10,19 @@ def get_all(db: Session):
     return audio_records
 
 
-def create(request: schemas.AudioRecordBase, db: Session, current_user: schemas.UserAccount):
+def create(request: schemas.AudioRecordBase, db: Session, current_user: schemas.User):
     new_audio_record_id = db.execute(Sequence('xxfr_al_audio_record_id_seq'))
 
-    user_account = db.query(models.UserAccounts).filter(models.UserAccounts.user_name == current_user.username).first()
+    user_account = db.query(models.UserAccounts).filter(models.UserAccounts.email_address == current_user.email).first()
+
     new_audio_record = models.AudiRecord(audio_record_id=new_audio_record_id,
                                          audio_record_title=request.audio_record_title,
-                                         audio_record_date=request.audio_record_date,
+                                         audio_record_date=datetime.now(),
                                          audio_record_file_type=request.audio_record_file_type,
                                          creation_date=datetime.now(),
                                          last_updated_date=datetime.now(),
+                                         created_by=user_account.user_name,
+                                         last_updated_by=user_account.user_name,
                                          user_id=user_account.user_id)
     db.add(new_audio_record)
     db.commit()

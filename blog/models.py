@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey, Date, TIMESTAMP
 from .database import Base
 from sqlalchemy.orm import relationship
 
+
 class AudiRecord(Base):
     __tablename__ = 'xxfr_audio_life_user_records'
 
